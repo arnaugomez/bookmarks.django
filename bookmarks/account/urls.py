@@ -1,12 +1,18 @@
 from django.urls import path, include
 from . import views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("dashboard/", views.dashboard, name="dashboard"),
-    path('', include('django.contrib.auth.urls')), # Replaces all auth routes
-    path("register/", views.register, name="register")
+    path("", include("django.contrib.auth.urls")),  # Replaces all auth routes
+    path("register/", views.register, name="register"),
+    path("edit/", views.edit, name="edit"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 """ YOU NO LONGER NEED THESE
     # path("login/", views.user_login, name="login"),
